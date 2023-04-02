@@ -10,7 +10,8 @@
   </head>
   <body>
     <%= render 'layouts/header' %>
-      <main>
+      <main class="mb-auto">
+        <%= yield %>
         <p id="notice"><%= notice %></p>
       </main>
     <%= render 'layouts/footer' %>
