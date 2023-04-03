@@ -33,40 +33,57 @@
               <% if @book.favorited_by?(current_user) %>
                 <p>
                   <%= link_to book_favorites_path(@book), method: :delete do %>
-                    ♥<%= @book.favorites.count %> いいね
+                     <font color="red"> ♥<%= @book.favorites.count %> </font>
                   <% end %>
                 </p>
                 <% else %>
                 <p>
                   <%= link_to book_favorites_path(@book), method: :post do %>
-                    ♡<%= @book.favorites.count %> いいね
+                    ♡<%= @book.favorites.count %>
                   <% end %>
                 </p>
               <% end %>
             </td>
             <!-- fav機能一旦実装 -->
-
+            
             <!-- コメント機能一旦実装 -->
             <td>
-              <div>
-                <p>コメント件数：<%= @book.post_comments.count %></p>
-                <% @book.post_comments.each do |post_comment| %>
-                  <p><%= image_tag post_comment.user.get_profile_image(100,100) %></p>
-                  <%= post_comment.user.name %>
-                  <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
-                <% end %>
-              </div>
-              <div>
-                <%= form_with model: [@book, @post_comment] do |f| %>
-                  <%= f.text_area :comment, rows: '5', placeholder: "コメントここ" %>
-                  <%= f.submit "送信する" %>
-                <% end %>
-              </div>
+              <p>コメント：<%= @book.post_comments.count %></p>
             </td>
             <!-- コメント機能一旦実装 -->
-
+            
         </tr>
       </table>
+      
+      <!-- コメント機能一旦実装 -->
+      <div>
+        <% @book.post_comments.each do |post_comment| %>
+          <p>
+            <%= image_tag post_comment.user.get_profile_image, size:"50x50" %>
+            
+            <%= post_comment.comment %>
+            <% if post_comment.user == current_user %>
+              <%= link_to "Destroy", book_post_comment_path(post_comment.book, post_comment), method: :delete , class: "btn btn-danger" %>
+            <% end %>
+            
+          </p>
+          User: <%= link_to post_comment.user.name, user_path(post_comment.user) %> <br>
+          <br>
+        <% end %>
+      </div>
+      
+      <br>
+      
+      <div>
+        <%= form_with model: [@book, @post_comment] do |f| %>
+          <p>
+          <%= f.text_area :comment, cols: '120', rows: '5', placeholder: "コメントここ" %><br>
+          <%= f.submit "送信" %>
+          </p>
+        <% end %>
+      </div>
+    <!-- コメント機能一旦実装 -->
+    
     </div>
   </div>
 </div>
