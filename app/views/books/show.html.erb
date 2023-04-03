@@ -27,6 +27,44 @@
                 <%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%>
               <% end %>
             </td>
+
+            <!-- fav機能一旦実装 -->
+            <td>
+              <% if @book.favorited_by?(current_user) %>
+                <p>
+                  <%= link_to book_favorites_path(@book), method: :delete do %>
+                    ♥<%= @book.favorites.count %> いいね
+                  <% end %>
+                </p>
+                <% else %>
+                <p>
+                  <%= link_to book_favorites_path(@book), method: :post do %>
+                    ♡<%= @book.favorites.count %> いいね
+                  <% end %>
+                </p>
+              <% end %>
+            </td>
+            <!-- fav機能一旦実装 -->
+
+            <!-- コメント機能一旦実装 -->
+            <td>
+              <div>
+                <p>コメント件数：<%= @book.post_comments.count %></p>
+                <% @book.post_comments.each do |post_comment| %>
+                  <p><%= image_tag post_comment.user.get_profile_image(100,100) %></p>
+                  <%= post_comment.user.name %>
+                  <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
+                <% end %>
+              </div>
+              <div>
+                <%= form_with model: [@book, @post_comment] do |f| %>
+                  <%= f.text_area :comment, rows: '5', placeholder: "コメントここ" %>
+                  <%= f.submit "送信する" %>
+                <% end %>
+              </div>
+            </td>
+            <!-- コメント機能一旦実装 -->
+
         </tr>
       </table>
     </div>
