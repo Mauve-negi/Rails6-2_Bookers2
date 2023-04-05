@@ -44,6 +44,21 @@ class User < ApplicationRecord
   end
   # フォロー/フォロワー機能
   
+  # 検索機能
+  def self.looks(search, word)
+    if search == "perfect_match"
+      @user = User.where("name LIKE?", "#{word}")
+    elsif search == "forward_match"
+      @user = User.where("name LIKE?","#{word}%")
+    elsif search == "backward_match"
+      @user = User.where("name LIKE?","%#{word}")
+    elsif search == "partial_match"
+      @user = User.where("name LIKE?","%#{word}%")
+    else
+      @user = User.all
+    end
+  end
+  # 検索機能
   
   # def get_profile_image(width, height)
   #   unless profile_image.attached?

@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     resource :favorites, only: [:create, :destroy]
   end
   
+  get "search" => "searches#search"
+  
   post 'follow/:id' => 'relationships#follow', as: 'follow' 
   post 'unfollow/:id' => 'relationships#unfollow', as: 'unfollow' 
 
