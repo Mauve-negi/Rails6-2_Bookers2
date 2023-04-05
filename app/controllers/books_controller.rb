@@ -4,6 +4,10 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @user = User.find(@book.user.id)
     @post_comment = PostComment.new
+    
+    # フォロー/フォロワー機能
+    @following_users = @user.following_user
+    @follower_users = @user.follower_user
   end
 
   def index

@@ -1,0 +1,39 @@
+<div class='container'>
+  <div class='row'>
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
+    <h2>Followers Users</h2>
+       
+    <table class='table'>
+      <thead>
+        <tr>
+          <th>image</th>
+          <th>name</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %> 
+          <tr>
+            <td><%= image_tag user.get_profile_image, size: '50x50' %></td>
+            <td><%= user.name %></td>
+            <!-- 追加 -->
+            <td>
+              <%= link_to follows_user_path(user) do %>
+                フォロー：<%= user.following_user.count %>
+              <% end %>
+            </td>
+            
+            <td>
+              <%= link_to followers_user_path(user) do %>
+                フォロワー：<%= user.follower_user.count %>
+              <% end %>
+            </td>
+            <!-- 追加 -->
+            <td><%= link_to 'Show', user %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+</div>
